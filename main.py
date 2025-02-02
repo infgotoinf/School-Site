@@ -1,9 +1,7 @@
 from fastapi import FastAPI
-# from utils import object_detection
-# from utils import json_to_dict_list
+from utils import json_to_dict_list
 import os
 from typing import Optional
-import json
 
 
 # Получаем путь к директории текущего скрипта
@@ -22,11 +20,21 @@ app = FastAPI()
 def root():
    return "API is working!"#FileResponse("public/index.html")
 
-@app.get("/get_all/{id}")
-def get_all_data(id : int):
-   users = json_to_dict_list(path_to_json)
-   return_list = []
-   for user in users:
-      if user["id"] == id:
-         return_list.append(users)
-   return return_list
+
+@app.get("/users")
+def get_all_data(access_level: Optional[int] = None,
+                 email: Optional[int] = None,
+                 login: Optional[int] = None,
+                 name: Optional[int] = None,
+                 password: Optional[int] = None,
+                 status: Optional[int] = None):
+    students = json_to_dict_list(path_to_json)
+    if access_level is None:
+        return students
+    else:
+        return_list = []
+        for student in students:
+            if student["access_level"] == access_level:
+                return_list.append(student)
+        return return_list
+
