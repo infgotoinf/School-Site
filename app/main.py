@@ -22,12 +22,7 @@ def root():
 
 
 @app.get("/users")
-def get_all_data(access_level: Optional[int] = None,
-                 email: Optional[int] = None,
-                 login: Optional[int] = None,
-                 name: Optional[int] = None,
-                 password: Optional[int] = None,
-                 status: Optional[int] = None):
+def get_all_data(access_level: Optional[int] = None):
     students = json_to_dict_list(path_to_json)
     if access_level is None:
         return students
