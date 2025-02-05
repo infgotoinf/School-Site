@@ -3,6 +3,19 @@ from utils import json_to_dict_list
 import os
 from typing import Optional
 
+import requests
+import json
+
+def get_result():
+    r = requests.get("https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/jason.json")
+    return r
+
+f = get_result()
+
+for i in f:
+    for j in i:
+        print(j)
+    print()
 
 # Получаем путь к директории текущего скрипта
 script_dir = os.path.dirname(os.path.abspath(__file__))
