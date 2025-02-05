@@ -5,17 +5,15 @@ from typing import Optional
 
 import requests
 import json
+from urllib.request import urlopen
+
 
 def get_result():
+    l = str(urlopen("https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/jason.json").read(),'utf-8')
     r = requests.get("https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/jason.json")
-    return r
+    return r.text
 
-f = get_result()
 
-for i in f:
-    for j in i:
-        print(j)
-    print()
 
 # Получаем путь к директории текущего скрипта
 script_dir = os.path.dirname(os.path.abspath(__file__))
