@@ -8,21 +8,21 @@ import json
 from urllib.request import urlopen
 
 
-def get_result():
-    l = str(urlopen("https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/jason.json").read(),'utf-8')
-    r = requests.get("https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/jason.json")
-    return r.text
+response = requests.get("https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/jason.json")
+data = response.content.decode('utf-8') # Декодируем данные
+json_data = json.loads(data) # Получаем JSON. 😎
 
+print(json_data)
 
 
 # Получаем путь к директории текущего скрипта
-script_dir = os.path.dirname(os.path.abspath(__file__))
+# script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # # Переходим на уровень выше
 # parent_dir = os.path.dirname(script_dir)
 
 # Получаем путь к JSON
-path_to_json = os.path.join(script_dir, 'jason.json')
+# path_to_json = os.path.join(script_dir, 'jason.json')
 
 
 app = FastAPI()
@@ -31,16 +31,22 @@ app = FastAPI()
 def root():
    return "API is working!"#FileResponse("public/index.html")
 
-
 @app.get("/users")
-def get_all_data(access_level: Optional[int] = None):
-    students = json_to_dict_list(path_to_json)
-    if access_level is None:
-        return students
+def get_all_data(login: Optional[str] = None):
+    users = json_data
+    if login is None:
+        return users
     else:
         return_list = []
-        for student in students:
-            if student["access_level"] == access_level:
-                return_list.append(student)
+        for user in users:
+            if user["login"] == login:
+                return_list.append(user)
         return return_list
 
+@app.get("/login")
+def login(login, password):
+    users = json_data
+    for user in users:
+            if (user["login"] == login) & (user["password"] == password):
+                return "Wellcome!"
+    return "Wrong login or password!"
