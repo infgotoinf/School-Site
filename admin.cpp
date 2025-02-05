@@ -157,6 +157,7 @@ int main() {
 		case 2:
 			Database = create();
 			// СОЗДАЁТСЯ СООТВЕТСТВУЮЩИЙ ФАЙЛ И СОХРАНЯЕТСЯ
+			// ЕГО НАЗВАНИЕ ДОЛЖНО ДОБАВЛЯТСЯ В КОНЕЦ AllDataDatabase.json
 			break;
 	}
 	goto menu;
