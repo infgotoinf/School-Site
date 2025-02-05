@@ -6,3 +6,5 @@
 4. Активировать его ```cd env\Scripts``` и ```activate```
 5. ```cd..``` 2 раза и ```pip install uvicorn fastapi[all] requests```
 6. Для запуска сайта нужно в директории проекта в консоли прописать ```uvicorn main:app --reload```
+# Что нужно для того, чтобы консольное приложение заработало?
+Для этого нужно воспользоваться следующим гайдом на ютубе по установлению C++ для VS Code: https://youtu.be/DMWD7wfhgNY?si=X11qAhJoUQkJbGRN
