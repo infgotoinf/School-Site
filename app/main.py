@@ -1,13 +1,17 @@
-from fastapi import FastAPI
-from utils import json_to_dict_list
-import os
+from fastapi import FastAPI, Request, Response
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from typing import Optional
 
 import requests
 import json
+import os
 from urllib.request import urlopen
 
+root = os.path.dirname(os.path.abspath(__file__))
 
+# Загрузка jsona с гитхаба в переменную
 response = requests.get("https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/jason.json")
 data = response.content.decode('utf-8') # Декодируем данные
 json_data = json.loads(data) # Получаем JSON. 😎
@@ -15,21 +19,23 @@ json_data = json.loads(data) # Получаем JSON. 😎
 print(json_data)
 
 
-# Получаем путь к директории текущего скрипта
-# script_dir = os.path.dirname(os.path.abspath(__file__))
-
-# # Переходим на уровень выше
-# parent_dir = os.path.dirname(script_dir)
-
-# Получаем путь к JSON
-# path_to_json = os.path.join(script_dir, 'jason.json')
-
 
 app = FastAPI()
+# staticfiles = StaticFiles(directory="demo/toServe")
+# app.mount("/static", staticfiles, name="static")
+# templates = Jinja2Templates(directory="demo")
+templates = Jinja2Templates(directory="Site")
+
 
 @app.get("/")
-def root():
-   return "API is working!"#FileResponse("public/index.html")
+# async def main():
+#     with open(os.path.join(root, 'index.html')) as fh:
+#         data = fh.read()
+#     return Response(content=data, media_type="html")
+async def get_students_html(request: Request):
+    return templates.TemplateResponse(name='index.html', context={'request': request})
+
+
 
 @app.get("/users")
 def get_all_data(login: Optional[str] = None):
@@ -42,6 +48,7 @@ def get_all_data(login: Optional[str] = None):
             if user["login"] == login:
                 return_list.append(user)
         return return_list
+
 
 @app.get("/login")
 def login(login, password):
