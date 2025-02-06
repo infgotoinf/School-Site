@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
     <head>
         <title>School Site</title>
         <meta charset="utf-8" />
@@ -11,12 +11,13 @@
     </head>
     <body>
 
-      <form action>
-        <label for="fname">First name:</label><br>
-        <input type="text" id="fname" name="fname" value="John"><br>
-        <label for="lname">Last name:</label><br>
-        <input type="text" id="lname" name="lname" value="Doe"><br><br>
-        <input type="submit" value="Submit">
+      <form class="login-form">
+        <p>Войдите в аккаунт</p>
+        <label for="login">Логин:</label><br>
+        <input type="text" id="login" class="login" name="login" required><br>
+        <label for="email">Имэил:</label><br>
+        <input type="text" id="email" class="email" name="email" required><br><br>
+        <button type="submit">Отправить</button>
       </form> 
 
     </body>
