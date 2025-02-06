@@ -21,11 +21,11 @@ print(json_data)
 
 
 app = FastAPI()
-# staticfiles = StaticFiles(directory="demo/toServe")
-# app.mount("/static", staticfiles, name="static")
-# templates = Jinja2Templates(directory="demo")
+
 templates = Jinja2Templates(directory="Site")
 
+# Говорим АПИ где находятся статик файлы
+app.mount('/static', StaticFiles(directory='static'), 'static')
 
 @app.get("/")
 # async def main():
