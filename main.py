@@ -22,7 +22,7 @@ print(json_data)
 
 app = FastAPI()
 
-templates = Jinja2Templates(directory="Site")
+templates = Jinja2Templates(directory="site")
 
 # Говорим АПИ где находятся статик файлы
 app.mount('/static', StaticFiles(directory='static'), 'static')
