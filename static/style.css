@@ -7,12 +7,12 @@
 .login-form {
   font-size: 14px;
 }
-.email {
+.password {
   font-size: 18px;
 }
-.email-form {
+.password-form {
   font-size: 14px;
 }
-.login-button {
+.send {
   font-size: 18px;
 }

@@ -2,7 +2,10 @@ from fastapi import FastAPI, Request, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from django.core.serializers.json import DjangoJSONEncoder
+from django.shortcuts import render
 from typing import Optional
+
 
 import requests
 import json
@@ -28,12 +31,11 @@ templates = Jinja2Templates(directory="site")
 app.mount('/static', StaticFiles(directory='static'), 'static')
 
 @app.get("/")
-# async def main():
-#     with open(os.path.join(root, 'index.html')) as fh:
-#         data = fh.read()
-#     return Response(content=data, media_type="html")
-async def authorization(request: Request):
-    return templates.TemplateResponse(name='index.html', context={'request': request})
+# async def authorization(request: Request):
+#     return templates.TemplateResponse(name='index.html', context={'request': request})
+def my_view(request):
+    return render(request, 'site/index.html', json_data)
+
 
 @app.get("/menu")
 async def menu(request: Request):
