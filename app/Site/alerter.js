@@ -26,6 +26,7 @@ form.addEventListener('submit', (evt) => {
   const login = loginInput.value;
   const password = passwordInput.value;
 
-  
+  window.location = 'https://www.example.com';
+
   form.submit();
 });

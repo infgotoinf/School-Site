@@ -32,10 +32,12 @@ app.mount('/static', StaticFiles(directory='static'), 'static')
 #     with open(os.path.join(root, 'index.html')) as fh:
 #         data = fh.read()
 #     return Response(content=data, media_type="html")
-async def get_students_html(request: Request):
+async def authorization(request: Request):
     return templates.TemplateResponse(name='index.html', context={'request': request})
 
-
+@app.get("/menu")
+async def menu(request: Request):
+    return templates.TemplateResponse(name='menu.html', context={'request': request})
 
 @app.get("/users")
 def get_all_data(login: Optional[str] = None):
