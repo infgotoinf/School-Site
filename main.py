@@ -1,11 +1,9 @@
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Request, Response, Form
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.templating import Jinja2Templates
-from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import render
 from typing import Optional
-
 
 import requests
 import json
@@ -33,26 +31,25 @@ app.mount('/static', StaticFiles(directory='static'), 'static')
 @app.get("/")
 # async def authorization(request: Request):
 #     return templates.TemplateResponse(name='index.html', context={'request': request})
-def my_view(request):
-    return render(request, 'site/index.html', json_data)
+# def my_view(request):
+#     return render(request, 'site/index.html', json_data)
+def root():
+    return FileResponse("site/index.html")
 
+@app.post("/login")
+def postdata(login = Form(), password=Form()):
+    for i in json_data:
+        if ((i["login"] == login) & (i["password"] == password)):
+            return FileResponse("site/menu.html")
+    return FileResponse("site/index.html")
 
-@app.get("/menu")
-async def menu(request: Request):
-    return templates.TemplateResponse(name='menu.html', context={'request': request})
+@app.get("/tables")
+def root():
+    return FileResponse("site/tables.html")
 
-@app.get("/users")
-def get_all_data(login: Optional[str] = None):
-    users = json_data
-    if login is None:
-        return users
-    else:
-        return_list = []
-        for user in users:
-            if user["login"] == login:
-                return_list.append(user)
-        return return_list
-
+@app.get("/materials")
+def root():
+    return FileResponse("site/materials.html")
 
 @app.get("/login")
 def login(login, password):
