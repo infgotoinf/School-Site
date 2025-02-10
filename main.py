@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Response, Form
+from fastapi import FastAPI, Request, Response, Form, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.templating import Jinja2Templates
@@ -44,6 +44,23 @@ def postdata(login = Form(), password=Form()):
 def root():
     return FileResponse("site/tables.html")
 
-@app.get("/materials")
+# @app.get("/materials")
+#     return FileResponse("site/materials.html")
+# async def get_files_html(request: Request, files=Depends(material_data)):
+#     return templates.TemplateResponse(request=Request, name='materials.html', context={'files': files})
+
+# link_template = "/materials/{file}"
+# @app.post(link_template.format(file=material_data[0]["filename"]))
+# def download():
+#     download_template = "files/materials/{file}"
+#     return FileResponse(download_template.format(file=material_data[0]["filename"]))
+
+@app.get("/materials", response_class=HTMLResponse)
 def root():
-    return FileResponse("site/materials.html")
+    data = "<h1>Материалы</h1>"
+    for i in material_data:
+        data = data + f"<p>{i["filename"]}</p>"
+    return data
+
+link_template = "/materials/{file}"
+#print(link_template.format(file=material_data[0]["filename"]))

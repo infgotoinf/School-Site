@@ -9,7 +9,12 @@
     </head>
     <body>
 
-        <p class="words">Материалы</p>
-      
+        {% for file in files %}
+        <div class="form" action="login" method="post">
+            <p class="words">Материалы</p>
+            <a href="/materials" class="link">{{ file.filename }}</a><br>
+        </div>
+        {% endfor %}
+
     </body>
 </html>
