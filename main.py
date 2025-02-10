@@ -13,12 +13,15 @@ from urllib.request import urlopen
 root = os.path.dirname(os.path.abspath(__file__))
 
 # Загрузка jsona с гитхаба в переменную
-response = requests.get("https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/jason.json")
+response = requests.get("https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/files/jsons/jason.json")
 data = response.content.decode('utf-8') # Декодируем данные
 json_data = json.loads(data) # Получаем JSON. 😎
 
-print(json_data)
+response = requests.get("https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/files/jsons/jason.json")
+data = response.content.decode('utf-8') # Декодируем данные
+json_data = json.loads(data) # Получаем JSON. 😎
 
+https://github.com/infgotoinf/School-Site/raw/refs/heads/main/files/materials/
 
 
 app = FastAPI()
