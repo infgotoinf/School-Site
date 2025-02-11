@@ -1,28 +1,18 @@
 [
     {
         "access_level":"Admin",
-        "email":"ManManMan@gmail.com",
         "login":"Man777",
         "name":"Ivan",
         "password":"chmod"
     },
     {
-        "access_level":"Admin",
-        "email":"Guy228@gmail.com",
-        "login":"Guy228",
-        "name":"Artem",
-        "password":"abc"
-    },
-    {
-        "access_level":"User",
-        "email":"Akim2007@gmail.com",
+        "access_level":"Student",
         "login":"User69",
         "name":"Akim2007",
         "password":"akim228"
     },
     {
-        "access_level":"Manager",
-        "email":"o",
+        "access_level":"Teacher",
         "login":"Fready",
         "name":"Wilian",
         "password":"Fazbear"
