@@ -9,6 +9,7 @@ import os
 from encrypt import xor_encrypt_decrypt
 
 root = os.path.dirname(os.path.abspath(__file__))
+key = "69"
 
 # Загрузка jsona с гитхаба в переменную
 response = requests.get("https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/files/jsons/jason.json")
@@ -51,3 +52,9 @@ def root():
     return data
 
 for js in user_data:
+    for j in js:
+        js[j] = xor_encrypt_decrypt(js[j], key)
+    print()
+
+with open('data.json', 'w', encoding='utf-8') as file:
+    json.dump(user_data, file, ensure_ascii=False, indent=4)
