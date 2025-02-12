@@ -11,7 +11,6 @@ from tkinter import filedialog
 
 from encrypt import xor_encrypt_decrypt
 
-root = os.path.dirname(os.path.abspath(__file__))
 key = "69"
 
 # Загрузка jsona с гитхаба в переменную
@@ -55,7 +54,7 @@ def root():
     data = "<title>Материалы</title>"
     data = data + "<h1>Материалы</h1>"
     data = data + f'<form class="form" action="materials/add" method="get">'
-    data = data + f'<button class="add" method="post">Отправить</button><br></form>'
+    data = data + f'<button class="add">Добавить</button><br></form>'
     for i in material_data:
         file = i["filename"]
         data = data + f'<a href="https://github.com/infgotoinf/School-Site/raw/refs/heads/main/files/materials/{file}">{file}</a>'
@@ -75,15 +74,15 @@ def add():
 
         new = {"filename": filename}
         material_data.append(new)
-        with open('files/materials.json', 'w', encoding='utf-8') as file:
+        with open('files/jsons/materials.json', 'w', encoding='utf-8') as file:
             json.dump(material_data, file, ensure_ascii=False, indent=4)
 
-        shutil.copy2(path, f'files/{filename}')
+        shutil.copy2(path, f'files/materials/{filename}')
 
         os.system("git add .")
         os.system(f'git commit -m "{filename}"')
         os.system("git push")
-    return FileResponse("site/tables.html")
+    return FileResponse("site/menu.html")
 
 
 # for js in user_data:
