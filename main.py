@@ -5,6 +5,7 @@ from fastapi.responses import HTMLResponse, FileResponse
 import requests
 import json
 import os
+import shutil
 
 from tkinter import filedialog
 
@@ -51,7 +52,8 @@ def root():
 
 @app.get("/materials", response_class=HTMLResponse)
 def root():
-    data = "<h1>Материалы</h1>"
+    data = "<title>Материалы</title>"
+    data = data + "<h1>Материалы</h1>"
     data = data + f'<form class="form" action="materials/add" method="get">'
     data = data + f'<button class="add" method="post">Отправить</button><br></form>'
     for i in material_data:
@@ -62,13 +64,13 @@ def root():
 
 @app.get("/materials/add")
 def add():
-    file = filedialog.askopenfilename()
-    
-    if (file != ''):
-        i = len(file) - 1
+    path = filedialog.askopenfilename()
+
+    if (path != ''):
+        i = len(path) - 1
         filename = ''
-        while (file[i] != '/'):
-            filename = file[i] + filename
+        while (path[i] != '/'):
+            filename = path[i] + filename
             i -= 1
     
     new = {"filename": filename}
@@ -76,6 +78,8 @@ def add():
     with open('files/materials.json', 'w', encoding='utf-8') as file:
         json.dump(material_data, file, ensure_ascii=False, indent=4)
     
+    shutil.copy2(path, f'files/{filename}')
+
     os.system("git add .")
     os.system(f'git commit -m "{filename}"')
     os.system("git push")
