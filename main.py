@@ -72,18 +72,19 @@ def add():
         while (path[i] != '/'):
             filename = path[i] + filename
             i -= 1
-    
-    new = {"filename": filename}
-    material_data.append(new)
-    with open('files/materials.json', 'w', encoding='utf-8') as file:
-        json.dump(material_data, file, ensure_ascii=False, indent=4)
-    
-    shutil.copy2(path, f'files/{filename}')
 
-    os.system("git add .")
-    os.system(f'git commit -m "{filename}"')
-    os.system("git push")
-    return '<meta http-equiv="refresh" content="0; href=/materials">'
+            new = {"filename": filename}
+            material_data.append(new)
+            with open('files/materials.json', 'w', encoding='utf-8') as file:
+                json.dump(material_data, file, ensure_ascii=False, indent=4)
+
+            shutil.copy2(path, f'files/{filename}')
+
+            os.system("git add .")
+            os.system(f'git commit -m "{filename}"')
+            os.system("git push")
+
+    return '<meta http-equiv="refresh" content="0"; action="materials">'
 
 
 # for js in user_data:
