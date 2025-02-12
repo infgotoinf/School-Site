@@ -6,3 +6,6 @@
 4. ```cd..``` 2 раза и ```pip install uvicorn fastapi[all] requests jinja2```
 5. Перейти в ```C:\Users\<user>\AppData\Local\Programs\Python\Python313\``` и копировать папку tcl, чтобы вставить её в корневой папке виртуального окружения (env)
 6. Для запуска сайта нужно в директории с python файлом в консоли прописать ```uvicorn main:app --reload```
+# Как запустить консоль админа?
+1. Скачать node.js ```https://nodejs.org/en/download```
+2. Добавить расширение Code Runner в VS Code
