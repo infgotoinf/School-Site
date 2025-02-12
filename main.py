@@ -84,7 +84,7 @@ def add():
             os.system(f'git commit -m "{filename}"')
             os.system("git push")
 
-    return '<action="materials">'
+    return "/materials"
 
 
 # for js in user_data:
