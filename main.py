@@ -62,7 +62,7 @@ def root():
         data = data + f'<button id="{file}" class="delete">Удалить</button><br>'
     return data
 
-@app.get("/materials/add", response_class=HTMLResponse)
+@app.get("/materials/add")
 def add():
     path = filedialog.askopenfilename()
 
@@ -83,8 +83,7 @@ def add():
         os.system("git add .")
         os.system(f'git commit -m "{filename}"')
         os.system("git push")
-
-    return '<meta http-equiv="refresh" content="0">'
+    return FileResponse("site/tables.html")
 
 
 # for js in user_data:
