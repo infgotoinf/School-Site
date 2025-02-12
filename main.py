@@ -13,6 +13,8 @@ from encrypt import xor_encrypt_decrypt
 
 key = "69"
 
+access_level = None
+
 # Загрузка jsona с гитхаба в переменную
 response = requests.get("https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/files/jsons/data.json")
 data = response.content.decode('utf-8') # Декодируем данные
@@ -26,6 +28,10 @@ for js in user_data:
 response = requests.get("https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/files/jsons/materials.json")
 data = response.content.decode('utf-8')
 material_data = json.loads(data)
+
+response = requests.get("https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/admin/AllDataDatabase.json")
+data = response.content.decode('utf-8')
+table_data = json.loads(data)
 
 
 # Функция обновления физической таблицы с материалами
@@ -57,21 +63,62 @@ def postdata(login = Form(), password = Form()):
             return FileResponse("site/menu.html")
     return FileResponse("site/index.html")
 
-@app.get("/tables")
-def root():
-    return FileResponse("site/tables.html")
+@app.get("/tables", response_class=HTMLResponse)
+def tables():
+    data = \
+f'<!DOCTYPE html> \
+<html lang="ru"> \
+    <head> \
+        <meta charset="UTF-8"> \
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> \
+        <title>School Site</title> \
+        <link rel="stylesheet" type="text/css" href="/static/base.css"> \
+    </head>'
+    for table in table_data:
+        response = requests.get(f"https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/files/tables/{table["name"]}")
+        data = response.content.decode('utf-8')
+        cur_table = json.loads(data)
+        data = data + \
+    f'<body> \
+        <p class="words" onclick="convert()">Таблицы</p> \
+        <p class="link">{table["name"]}</p> \
+        <script> \
+        function convert(json) {{ \
+            var str = JSON.stringify({cur_table}, null, 2); \
+            let pre = document.createElement("pre"); \
+            pre.innerText = str; \
+         }} \
+        </script> \
+    </body> \
+</html>'
+    return data
 
 @app.get("/materials", response_class=HTMLResponse)
-def root():
-    data = "<title>Материалы</title>"
-    data = data + "<h1>Материалы</h1>"
-    data = data + f'<form action="materials/add" method="get">'
-    data = data + f'<button class="add">Добавить</button><br></form>'
+def materials():
+    data = \
+'<!DOCTYPE html> \
+<html lang="ru"> \
+    <head> \
+        <meta charset="UTF-8"> \
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> \
+        <title>School Site</title> \
+        <link rel="stylesheet" type="text/css" href="/static/base.css"> \
+    </head> \
+    <body> \
+        <p class="words">Материалы</p> \
+        <form action="materials/add" method="get"> \
+            <button class="button">Добавить</button> \
+        </form>'
     for i in material_data:
         file = i["filename"]
-        data = data + f'<a href="https://github.com/infgotoinf/School-Site/raw/refs/heads/main/files/materials/{file}">{file}</a>'
-        data = data + f'<form id="{file}" action="materials/delete/{file}" method="get">'
-        data = data + f'<button id="{file}" class="delete">Удалить</button><br></form>'
+        data = data + \
+        f'<form id="{file}" action="materials/delete/{file}" method="get"> \
+            <a class="link" href="https://github.com/infgotoinf/School-Site/raw/refs/heads/main/files/materials/{file}">{file}</a> \
+            <button id="{file}" class="button">Удалить</button> \
+        </form>'
+    data = data + \
+    '</body> \
+</html>'
     return data
 
 @app.get("/materials/add")
