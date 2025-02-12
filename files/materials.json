@@ -10,5 +10,8 @@
     },
     {
         "filename": "pdf"
+    },
+    {
+        "filename": ".pdf"
     }
 ]
