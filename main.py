@@ -84,7 +84,7 @@ def add():
             os.system(f'git commit -m "{filename}"')
             os.system("git push")
 
-    return '<meta http-equiv="refresh" content="0"; action="materials">'
+    return '<meta content="0"; action="materials">'
 
 
 # for js in user_data:
