@@ -13,8 +13,6 @@ from encrypt import xor_encrypt_decrypt
 
 key = "69"
 
-access_level = None
-
 # Загрузка jsona с гитхаба в переменную
 response = requests.get("https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/files/jsons/data.json")
 data = response.content.decode('utf-8') # Декодируем данные
