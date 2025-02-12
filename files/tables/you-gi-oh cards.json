@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Number 69",
+    "type": "legend",
+    "is good": "True"
+  },
+  {
+    "name": "everything else",
+    "type": "not legend",
+    "is good": "False"
+  }
+]
