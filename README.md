@@ -9,3 +9,5 @@
 # Как запустить консоль админа?
 1. Скачать node.js ```https://nodejs.org/en/download```
 2. Добавить расширение Code Runner в VS Code
+3. Скачиваем штуку npm ```install simple-git```
+   - Если нам это не дают сделать, то в powershell от имени администратора ```Set-ExecutionPolicy RemoteSigned```
