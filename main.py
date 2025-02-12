@@ -28,6 +28,14 @@ data = response.content.decode('utf-8')
 material_data = json.loads(data)
 
 
+# Функция сохранения данных на гитхаб
+def commit(savename):
+    os.system("git add .")
+    os.system(f'git commit -m "{savename}"')
+    os.system("git push")
+
+
+
 app = FastAPI()
 
 # Говорим АПИ где находятся статик файлы
@@ -39,7 +47,7 @@ def root():
     return FileResponse("site/index.html")
 
 @app.post("/login")
-def postdata(login = Form(), password=Form()):
+def postdata(login = Form(), password = Form()):
     for i in user_data:
         if ((i["login"] == login) & (i["password"] == password)):
             return FileResponse("site/menu.html")
@@ -53,12 +61,13 @@ def root():
 def root():
     data = "<title>Материалы</title>"
     data = data + "<h1>Материалы</h1>"
-    data = data + f'<form class="form" action="materials/add" method="get">'
+    data = data + f'<form action="materials/add" method="get">'
     data = data + f'<button class="add">Добавить</button><br></form>'
     for i in material_data:
         file = i["filename"]
         data = data + f'<a href="https://github.com/infgotoinf/School-Site/raw/refs/heads/main/files/materials/{file}">{file}</a>'
-        data = data + f'<button id="{file}" class="delete">Удалить</button><br>'
+        data = data + f'<form id="{file}" action="materials/delete/{file}" method="get">'
+        data = data + f'<button id="{file}" class="delete">Удалить</button><br></form>'
     return data
 
 @app.get("/materials/add")
@@ -79,10 +88,13 @@ def add():
 
         shutil.copy2(path, f'files/materials/{filename}')
 
-        os.system("git add .")
-        os.system(f'git commit -m "{filename}"')
-        os.system("git push")
+        commit(filename)
     return FileResponse("site/menu.html")
+
+@app.get("/materials/delete/{id}")
+def delete(id: str):
+    print(id)
+    return {"lol" : f"{id}"}
 
 
 # for js in user_data:
