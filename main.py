@@ -28,12 +28,16 @@ data = response.content.decode('utf-8')
 material_data = json.loads(data)
 
 
+# Функция обновления физической таблицы с материалами
+def update_material(new_material_data):
+    with open('files/jsons/materials.json', 'w', encoding='utf-8') as file:
+        json.dump(new_material_data, file, ensure_ascii=False, indent=4)
+
 # Функция сохранения данных на гитхаб
 def commit(savename):
     os.system("git add .")
     os.system(f'git commit -m "{savename}"')
     os.system("git push")
-
 
 
 app = FastAPI()
@@ -83,18 +87,27 @@ def add():
 
         new = {"filename": filename}
         material_data.append(new)
-        with open('files/jsons/materials.json', 'w', encoding='utf-8') as file:
-            json.dump(material_data, file, ensure_ascii=False, indent=4)
+
+        update_material(material_data)
 
         shutil.copy2(path, f'files/materials/{filename}')
 
-        commit(filename)
+        commit("added " + filename)
     return FileResponse("site/menu.html")
 
 @app.get("/materials/delete/{id}")
 def delete(id: str):
-    print(id)
-    return {"lol" : f"{id}"}
+    i = 0
+    for material in material_data:
+        if (material["filename"] == id):
+            material_data.pop(i)
+        i += 1
+    os.remove(f"files/materials/{id}")
+
+    update_material(material_data)
+
+    commit("deleted " + id)
+    return FileResponse("site/menu.html")
 
 
 # for js in user_data:
