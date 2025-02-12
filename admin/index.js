@@ -83,7 +83,7 @@ async function createTable() {
     }
 
     rl.close();
-    await save(table, `${tableName}.json`);
+    await save(table, `../files/tables/${tableName}.json`);
 
     // Добавление названия новой таблицы в AllDataDatabase.json
     const allDataDatabase = importData('AllDataDatabase.json');
@@ -158,7 +158,7 @@ async function mainMenu() {
                 allData.forEach((file, idx) => console.log(`${idx + 1}. ${file.name}`));
 
                 const tableName = await question("Введите название таблицы для открытия (без .json): ");
-                const database = importData(`${tableName}.json`);
+                const database = importData(`../files/tables/${tableName}.json`);
 
                 if (database.length === 0) {
                     console.log("Таблица пуста или не существует.");
