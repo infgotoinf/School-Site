@@ -52,26 +52,29 @@ def root():
 @app.get("/materials", response_class=HTMLResponse)
 def root():
     data = "<h1>Материалы</h1>"
-    data = data + f'<button action="login" class="add" method="post">Отправить</button><br>'
+    data = data + f'<form class="form" action="materials/add" method="get">'
+    data = data + f'<button class="add" method="post">Отправить</button><br></form>'
     for i in material_data:
         file = i["filename"]
         data = data + f'<a href="https://github.com/infgotoinf/School-Site/raw/refs/heads/main/files/materials/{file}">{file}</a>'
         data = data + f'<button id="{file}" class="delete">Удалить</button><br>'
     return data
 
-@app.post("/materials/add")
+@app.get("/materials/add")
 def add():
-    File = filedialog.askopenfilename()
-    # print(File)
-
-    if (File != ''):
-        i = len(File) - 1
-        Filename = ''
-        while (File[i] != '/'):
-            Filename = File[i] + Filename
+    file = filedialog.askopenfilename()
+    if (file != ''):
+        i = len(file) - 1
+        filename = ''
+        while (file[i] != '/'):
+            filename = file[i] + filename
             i -= 1
-        # print(Filename)
-    return data
+    new = {"filename": filename}
+    material_data.append(new)
+    with open('files/materials.json', 'w', encoding='utf-8') as file:
+        json.dump(material_data, file, ensure_ascii=False, indent=4)
+    return material_data
+
 
 # for js in user_data:
 #     for j in js:
