@@ -63,16 +63,22 @@ def root():
 @app.get("/materials/add")
 def add():
     file = filedialog.askopenfilename()
+    
     if (file != ''):
         i = len(file) - 1
         filename = ''
         while (file[i] != '/'):
             filename = file[i] + filename
             i -= 1
+    
     new = {"filename": filename}
     material_data.append(new)
     with open('files/materials.json', 'w', encoding='utf-8') as file:
         json.dump(material_data, file, ensure_ascii=False, indent=4)
+    
+    os.system("git add .")
+    os.system(f'git commit -m "{filename}"')
+    os.system("git push")
     return material_data
 
 
