@@ -78,8 +78,7 @@ def tables():
         response = requests.get(f"https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/files/tables/{table["name"]}")
         dat = response.content.decode('utf-8')
         cur_table = json.loads(dat)
-        data = data + '<a class="link">' + table["name"] + '<br>'
-        print(table)
+        data = data + '<p class="words">' + table["name"] + '</p><br><a class="link">'
         for elem in cur_table:
             data = data + str(elem) + '<br>'
         data = data + '</a><br>'
