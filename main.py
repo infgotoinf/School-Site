@@ -71,22 +71,18 @@ def tables():
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> \
         <title>Таблицы</title> \
         <link rel="stylesheet" type="text/css" href="/static/base.css"> \
-    </head>'
+    </head> \
+    <body> \
+        <p class="words">Таблицы</p>'
     for table in table_data:
         response = requests.get(f"https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/files/tables/{table["name"]}")
         dat = response.content.decode('utf-8')
         cur_table = json.loads(dat)
-        data = data + dat + \
-    f'<body> \
-        <p class="words" onclick="convert()">Таблицы</p> \
-        <p class="link">{table["name"]}</p> \
-        <script> \
-        function convert() {{ \
-            var str = JSON.stringify({cur_table}, null, 2); \
-            let pre = document.createElement("pre"); \
-            pre.innerText = str; \
-         }} \
-        </script>'
+        data = data + '<a class="link">' + table["name"] + '<br>'
+        print(table)
+        for elem in cur_table:
+            data = data + str(elem) + '<br>'
+        data = data + '</a><br>'
     data = data + \
     '</body> \
 </html>'
