@@ -64,30 +64,31 @@ def postdata(login = Form(), password = Form()):
 @app.get("/tables", response_class=HTMLResponse)
 def tables():
     data = \
-f'<!DOCTYPE html> \
+'<!DOCTYPE html> \
 <html lang="ru"> \
     <head> \
         <meta charset="UTF-8"> \
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> \
-        <title>School Site</title> \
+        <title>Таблицы</title> \
         <link rel="stylesheet" type="text/css" href="/static/base.css"> \
     </head>'
     for table in table_data:
         response = requests.get(f"https://raw.githubusercontent.com/infgotoinf/School-Site/refs/heads/main/files/tables/{table["name"]}")
-        data = response.content.decode('utf-8')
-        cur_table = json.loads(data)
-        data = data + \
+        dat = response.content.decode('utf-8')
+        cur_table = json.loads(dat)
+        data = data + dat + \
     f'<body> \
         <p class="words" onclick="convert()">Таблицы</p> \
         <p class="link">{table["name"]}</p> \
         <script> \
-        function convert(json) {{ \
+        function convert() {{ \
             var str = JSON.stringify({cur_table}, null, 2); \
             let pre = document.createElement("pre"); \
             pre.innerText = str; \
          }} \
-        </script> \
-    </body> \
+        </script>'
+    data = data + \
+    '</body> \
 </html>'
     return data
 
